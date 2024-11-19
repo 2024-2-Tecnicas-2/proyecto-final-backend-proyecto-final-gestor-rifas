@@ -102,5 +102,18 @@ public class GestorRifas {
             System.out.println("Error al cargar datos: " + e.getMessage());
         }
     }
+    public void eliminarRifa(int id) {
+        if (id >= 1 && id <= rifas.size()) {
+            rifas.remove(id - 1);  
+            System.out.println("Rifa eliminada exitosamente.");
+        } else {
+            System.out.println("No se pudo encontrar la rifa con ese número.");
+        }
+    }
+
+    
+    public boolean existeRifa(int id) {
+        return id >= 1 && id <= rifas.size();
+    }
     
 }

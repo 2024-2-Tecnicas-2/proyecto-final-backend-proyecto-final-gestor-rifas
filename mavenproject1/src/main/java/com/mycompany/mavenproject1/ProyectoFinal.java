@@ -62,22 +62,47 @@ public class ProyectoFinal {
     }
 
     private static void seleccionarRifa() {
+        System.out.println("seleccione una opcion");
+        System.out.println("1. seleccionar o crear rifa");
+        System.out.println("2. Eliminar rifa");
+        int opcionUno = scanner.nextInt();
+        if (opcionUno == 1) {
+            if (gestorRifas.hayRifas()) {
+                System.out.println("\nRifas disponibles:");
+                gestorRifas.mostrarRifas();
+                System.out.print("Seleccione el número de la rifa con la que desea trabajar o 0 para crear una nueva: ");
+                int opcionDos = scanner.nextInt();
+                scanner.nextLine();
+                if (opcionDos == 0) {
+                    crearRifa();
+                } else if (!gestorRifas.seleccionarRifa(opcionDos)) {
+                    System.out.println("Opción inválida. Se creará una nueva rifa.");
+                    crearRifa();
+                }
+            } else {
+                System.out.println("No hay rifas disponibles. Crearemos una nueva.");
+                crearRifa();
+            }
+
+        }
         if (gestorRifas.hayRifas()) {
             System.out.println("\nRifas disponibles:");
             gestorRifas.mostrarRifas();
-            System.out.print("Seleccione el número de la rifa con la que desea trabajar o 0 para crear una nueva: ");
-            int opcion = scanner.nextInt();
-            scanner.nextLine();
-            if (opcion == 0) {
-                crearRifa();
-            } else if (!gestorRifas.seleccionarRifa(opcion)) {
-                System.out.println("Opción inválida. Se creará una nueva rifa.");
-                crearRifa();
+
+            System.out.print("Seleccione el número de la rifa que desea eliminar: ");
+            int opcionTres = scanner.nextInt();
+            scanner.nextLine();  // Limpiar el buffer
+
+            if (gestorRifas.existeRifa(opcionTres)) {
+                gestorRifas.eliminarRifa(opcionTres);
+                System.out.println("Rifa eliminada con éxito.");
+            } else {
+                System.out.println("Opción inválida. No existe una rifa con ese número.");
             }
         } else {
-            System.out.println("No hay rifas disponibles. Crearemos una nueva.");
-            crearRifa();
+            System.out.println("No hay rifas disponibles.");
         }
+
     }
 
     private static void crearRifa() {
