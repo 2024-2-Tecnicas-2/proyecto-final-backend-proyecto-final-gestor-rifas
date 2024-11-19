@@ -4,15 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GestorRifas {
-    private List<Rifa> rifas;
-    private Rifa rifaActual;
+    private List<Rifas> rifas;
+    private Rifas rifaActual;
 
     public GestorRifas() {
         this.rifas = new ArrayList<>();
     }
 
     public void crearRifa(int tamaño, String loteria, String fecha) {
-        Rifa nuevaRifa = new Rifa(tamaño, loteria, fecha);
+        Rifas nuevaRifa = new Rifas(tamaño, loteria, fecha);
         rifas.add(nuevaRifa);
         rifaActual = nuevaRifa;
         System.out.println("Rifa creada exitosamente.");
@@ -96,7 +96,7 @@ public class GestorRifas {
 
     public void cargarDatosRifas() {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("rifas.dat"))) {
-            rifas = (List<Rifa>) ois.readObject();
+            rifas = (List<Rifas>) ois.readObject();
             System.out.println("Datos cargados exitosamente.");
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Error al cargar datos: " + e.getMessage());

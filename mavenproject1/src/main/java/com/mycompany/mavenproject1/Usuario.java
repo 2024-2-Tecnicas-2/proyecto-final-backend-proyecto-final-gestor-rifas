@@ -2,13 +2,13 @@
 package com.mycompany.mavenproject1;
 
 
-public class Usuarios {
+public class Usuario {
 
     private String nombre;
     private int edad;
 
     
-    public Usuarios(String nombre, int edad) {
+    public Usuario(String nombre, int edad) {
         this.nombre = nombre;
         this.edad = edad;
     }

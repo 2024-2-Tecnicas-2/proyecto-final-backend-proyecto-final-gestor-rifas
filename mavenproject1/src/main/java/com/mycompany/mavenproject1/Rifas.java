@@ -5,13 +5,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Rifa implements Serializable {
+public class Rifas implements Serializable {
 
     private List<Boleta> boletas;
     private String loteria;
     private String fecha;
 
-    public Rifa(int tamaño, String loteria, String fecha) {
+    public Rifas(int tamaño, String loteria, String fecha) {
         this.boletas = new ArrayList<>();
         for (int i = 1; i <= tamaño; i++) {
             boletas.add(new Boleta(i));
