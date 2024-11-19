@@ -1,76 +1,97 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package com.mycompany.mavenproject1;
 
-public class Rifas {
-    private Boleta[] boletas;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Rifa implements Serializable {
+
+    private List<Boleta> boletas;
     private String loteria;
     private String fecha;
 
-    public Rifas(int tamano) {
-        boletas = new Boleta[tamano];
-        for (int i = 0; i < tamano; i++) {
-            boletas[i] = new Boleta(i);
+    public Rifa(int tamaño, String loteria, String fecha) {
+        this.boletas = new ArrayList<>();
+        for (int i = 1; i <= tamaño; i++) {
+            boletas.add(new Boleta(i));
         }
-    }
-
-    public void setLoteria(String loteria) {
         this.loteria = loteria;
-    }
-
-    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 
-    public Boleta obtenerBoleta(int numero) {
-        if (numero >= 0 && numero < boletas.length) {
-            return boletas[numero];
-        }
-        return null;
+    public String getLoteria() {
+        return loteria;
     }
 
-    public void mostrarInfo() {
-        System.out.println("Rifa de tamaño: " + boletas.length + " boletas");
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void venderBoleta(int numero, String nombre, String telefono, String correo, String direccion, String estadoPago) {
+    Boleta boleta = buscarBoletaPorNumero(numero);
+    if (boleta != null) {
+        if (!boleta.isVendida()) {
+            boleta.vender(nombre, telefono, correo, direccion, estadoPago);
+            System.out.println("La boleta número " + numero + " se vendió con éxito.");
+        } else {
+            System.out.println("La boleta número " + numero + " ya está vendida. No se puede realizar la compra.");
+        }
+    } else {
+        System.out.println("La boleta número " + numero + " no existe en esta rifa.");
+    }
+}
+
+
+    public void actualizarEstadoPago(int numero, String nuevoEstadoPago) {
+        Boleta boleta = buscarBoletaPorNumero(numero);
+        if (boleta != null) {
+            boleta.actualizarEstadoPago(nuevoEstadoPago);
+        } else {
+            System.out.println("Boleta no encontrada.");
+        }
+    }
+
+    public void mostrarInformacion() {
         System.out.println("Lotería: " + loteria);
         System.out.println("Fecha de la rifa: " + fecha);
+        System.out.println("Total de boletas: " + boletas.size());
+        long boletasVendidas = boletas.stream().filter(Boleta::isVendida).count();
+        System.out.println("Boletas vendidas: " + boletasVendidas);
+        System.out.println("Boletas no vendidas: " + (boletas.size() - boletasVendidas));
     }
 
-    public void mostrarEstadoBoletasMatriz() {
-        System.out.println("\nEstado de las Boletas:");
-        int columnas = 10;
-        for (int i = 0; i < boletas.length; i++) {
-            Boleta boleta = boletas[i];
-            String estado = boleta.estaVendida() ? "O" : "X";
-            System.out.printf("[%s%02d] ", estado, boleta.getNumero());
-
-            if ((i + 1) % columnas == 0) {
-                System.out.println();
+    public void mostrarEstadoBoletas() {
+        System.out.println("Estado de las boletas:");
+        for (int i = 0; i < boletas.size(); i++) {
+            if (i % 10 == 0 && i != 0) {
+                System.out.println(); 
             }
+            Boleta boleta = boletas.get(i);
+            System.out.print("[" + boleta.getEstado() + boleta.getNumero() + "] ");
         }
+        System.out.println();
     }
 
     public void buscarBoleta(int numero) {
-        Boleta boleta = obtenerBoleta(numero);
+        Boleta boleta = buscarBoletaPorNumero(numero);
         if (boleta != null) {
-            System.out.println(boleta.getInfoCliente());
+            boleta.mostrarInformacion();
         } else {
-            System.out.println("Boleta no válida.");
+            System.out.println("Boleta no encontrada.");
         }
     }
 
     public void eliminarBoleta(int numero) {
-        Boleta boleta = obtenerBoleta(numero);
-        if (boleta != null && boleta.estaVendida()) {
-            boleta.setNombreParticipante(null);
-            boleta.setTelefono(null);
-            boleta.setCorreo(null);
-            boleta.setDireccion(null);
-            boleta.setEstadoPago("pendiente");
-            System.out.println("Boleta eliminada correctamente.");
+        Boleta boleta = buscarBoletaPorNumero(numero);
+        if (boleta != null) {
+            boleta.eliminarVenta();
         } else {
-            System.out.println("Boleta no vendida o no válida.");
+            System.out.println("Boleta no encontrada.");
         }
+    }
+
+    private Boleta buscarBoletaPorNumero(int numero) {
+        return boletas.stream().filter(b -> b.getNumero() == numero).findFirst().orElse(null);
     }
 }
