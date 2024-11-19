@@ -63,8 +63,8 @@ public class ProyectoFinal {
 
     private static void seleccionarRifa() {
         System.out.println("seleccione una opcion");
-        System.out.println("1. seleccionar o crear rifa");
-        System.out.println("2. Eliminar rifa");
+        System.out.println("1. seleccionar o crear rifa nueva");
+        System.out.println("2. Eliminar rifa existente");
         int opcionUno = scanner.nextInt();
         if (opcionUno == 1) {
             if (gestorRifas.hayRifas()) {
