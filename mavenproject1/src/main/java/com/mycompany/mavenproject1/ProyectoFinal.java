@@ -13,46 +13,48 @@ public class ProyectoFinal {
 
         System.out.println("¡Bienvenido al sistema de gestión de rifas!");
 
-        seleccionarRifa();
-
         int opcionMenu;
         do {
             System.out.println("\nMenu de opciones:");
-            System.out.println("1. Vender boleta");
-            System.out.println("2. Actualizar estado de pago");
-            System.out.println("3. Mostrar información de la rifa");
-            System.out.println("4. Mostrar estado de boletas");
-            System.out.println("5. Buscar boleta");
-            System.out.println("6. Eliminar boleta");
-            System.out.println("7. Guardar y cargar datos");
-            System.out.println("8. Salir");
+            System.out.println("1. Menu para crea, seleccionar o eliminar alguna rifa existente");
+            System.out.println("2. Vender boleta");
+            System.out.println("3. Actualizar estado de pago");
+            System.out.println("4. Mostrar información de la rifa");
+            System.out.println("5. Mostrar estado de boletas");
+            System.out.println("6. Buscar boleta");
+            System.out.println("7. Eliminar boleta");
+            System.out.println("8. Guardar y cargar datos");
+            System.out.println("9. Salir");
             System.out.print("Seleccione una opcion: ");
             opcionMenu = scanner.nextInt();
             scanner.nextLine();
 
             switch (opcionMenu) {
                 case 1:
-                    venderBoleta();
+                    seleccionarRifa();
                     break;
                 case 2:
-                    actualizarEstadoPago();
+                    venderBoleta();
                     break;
                 case 3:
-                    gestorRifas.mostrarInformacionRifa();
+                    actualizarEstadoPago();
                     break;
                 case 4:
-                    gestorRifas.mostrarEstadoBoletas();
+                    gestorRifas.mostrarInformacionRifa();
                     break;
                 case 5:
-                    buscarBoleta();
+                    gestorRifas.mostrarEstadoBoletas();
                     break;
                 case 6:
-                    eliminarBoleta();
+                    buscarBoleta();
                     break;
                 case 7:
-                    guardarYCargarDatos();
+                    eliminarBoleta();
                     break;
                 case 8:
+                    guardarYCargarDatos();
+                    break;
+                case 9:
                     System.out.println("¡Gracias por usar el sistema de rifas!");
                     break;
                 default:
@@ -84,23 +86,23 @@ public class ProyectoFinal {
                 crearRifa();
             }
 
-        }
-        if (gestorRifas.hayRifas()) {
-            System.out.println("\nRifas disponibles:");
-            gestorRifas.mostrarRifas();
+        } else if (opcionUno == 2) {
+            if (gestorRifas.hayRifas()) {
+                System.out.println("\nRifas disponibles:");
+                gestorRifas.mostrarRifas();
 
-            System.out.print("Seleccione el número de la rifa que desea eliminar: ");
-            int opcionTres = scanner.nextInt();
-            scanner.nextLine();  // Limpiar el buffer
+                System.out.print("Seleccione el número de la rifa que desea eliminar: ");
+                int opcionTres = scanner.nextInt();
+                scanner.nextLine();  // Limpiar el buffer
 
-            if (gestorRifas.existeRifa(opcionTres)) {
-                gestorRifas.eliminarRifa(opcionTres);
-                System.out.println("Rifa eliminada con éxito.");
-            } else {
-                System.out.println("Opción inválida. No existe una rifa con ese número.");
+                if (gestorRifas.existeRifa(opcionTres)) {
+                    gestorRifas.eliminarRifa(opcionTres);
+                    System.out.println("Rifa eliminada con éxito.");
+                } else {
+                    System.out.println("Opción inválida. No existe una rifa con ese número.");
+                }
             }
-        } else {
-            System.out.println("No hay rifas disponibles.");
+
         }
 
     }

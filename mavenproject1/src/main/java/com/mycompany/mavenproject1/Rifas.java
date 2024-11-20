@@ -10,6 +10,7 @@ public class Rifas implements Serializable {
     private List<Boleta> boletas;
     private String loteria;
     private String fecha;
+    private String nombre;
 
     public Rifas(int tamaño, String loteria, String fecha) {
         this.boletas = new ArrayList<>();
@@ -19,6 +20,10 @@ public class Rifas implements Serializable {
         this.loteria = loteria;
         this.fecha = fecha;
     }
+    public Rifas(String nombre) {
+    this.nombre = nombre;
+    this.boletas = new ArrayList<>(); // Inicializa la lista de boletas
+}
 
     public String getLoteria() {
         return loteria;
@@ -90,8 +95,22 @@ public class Rifas implements Serializable {
             System.out.println("Boleta no encontrada.");
         }
     }
+    public List<Boleta> getBoletas() {
+    return boletas;
+}
+    public String getNombre() {
+        
+    return nombre; 
+}
+
 
     private Boleta buscarBoletaPorNumero(int numero) {
         return boletas.stream().filter(b -> b.getNumero() == numero).findFirst().orElse(null);
     }
+    
+    @Override
+    public String toString() {
+        return "Rifa: " + nombre + "\nBoletas disponibles: " + boletas.size();
+    }
+   
 }

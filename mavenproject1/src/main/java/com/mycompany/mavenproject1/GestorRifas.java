@@ -115,5 +115,9 @@ public class GestorRifas {
     public boolean existeRifa(int id) {
         return id >= 1 && id <= rifas.size();
     }
+
+    public Object getRifaActual() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
 }
